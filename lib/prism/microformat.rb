@@ -22,7 +22,12 @@ module Prism
 
     def self.find(html, uformat = nil)
       if uformat
-        map(uformat).parse Prism.get(html)
+        if(uformat.kind_of?(Array))
+          data = Prism.get(html)
+          uformat.map{|f| map(f).parse(data)}
+        else
+          map(uformat).parse Prism.get(html)
+        end
       else
         find_all(html)
       end
